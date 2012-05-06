@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8"/>
+        <script type="text/javascript"
+                src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        </script>
+        <script type="text/javascript">
+            MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [['$','$'], ['\\(','\\)']],
+                    processEscapes: true
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <div><a href="/">all notes</a></div>
+        <div>
+            {% for note in notes %}
+            <div>
+                <div>{{ note.text }} <a href = "/note/{{note.id}}">#</a></div>
+                <div>
+                    {% for tag in note.tags.all %}
+                    <a href = "/tag/{{tag.id}}">{{tag.name}}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>
