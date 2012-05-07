@@ -1,0 +1,12 @@
+<div>
+    {% for note in notes %}
+    <div class="box">
+        <div>{{ note.text }} <a href = "/note/{{note.id}}">#</a></div>
+        <div>
+            {% for tag in note.tags.all %}
+            <a href = "/tag/{{tag.id}}">{{tag.name}}</a>&nbsp;&nbsp;
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,11 @@
+<div class="box" id="tags">
+{% for tag in tags %}
+<div>
+<a href = "/tag/{{tag.id}}">{{tag.name}}</a>
+</div>
+{% endfor %}
+</div>
+<div class="box">
+    <input type="text" id="new_tag_name"/>
+    <button id="add_tag_button">Add tag</button>
+</div>

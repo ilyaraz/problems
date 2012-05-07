@@ -18,11 +18,10 @@
                 background-color: #ddd;
             }
             a {
-                font-weight: bold;
                 text-decoration: underline;
                 color: #333;
             }
-            .note {
+            .box {
                 margin: 10px;
                 width: 960px;
                 background-color: #fff;
@@ -40,22 +39,3 @@
                 width: 960px;
             }
         </style>
-    </head>
-    <body>
-        <div class="everything">
-            <div class="header"><a href="/">all notes</a></div>
-            <div>
-                {% for note in notes %}
-                <div class="note">
-                    <div class="note_text">{{ note.text }} <a href = "/note/{{note.id}}">#</a></div>
-                    <div class="tags">
-                        {% for tag in note.tags.all %}
-                        <a href = "/tag/{{tag.id}}">{{tag.name}}</a>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </body>
-</html>

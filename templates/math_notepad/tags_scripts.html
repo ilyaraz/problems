@@ -1,0 +1,15 @@
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#add_tag_button").click(function() {
+            var new_tag_name = $("#new_tag_name").val();
+            $.post("/new_tag/", {'name': new_tag_name}, function(data) {
+                response = eval(data);
+                $("#tags").html("");
+                for (var i = 0; i < response.length; ++i) {
+                    $("#tags").append("<div><a href = \"/tag/" + response[i].pk + "\">" + response[i].fields.name + "</a></div>");
+                }
+            });
+        });
+    });
+</script>
