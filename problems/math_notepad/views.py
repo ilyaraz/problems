@@ -5,6 +5,7 @@ from math_notepad.models import Note, Tag
 from django.template import Context, loader
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
+import datetime
 
 def home(request):
     return show_notes(Note.objects.all().filter(deleted = False))
@@ -16,7 +17,25 @@ def note(request, note_id):
     return show_notes(Note.objects.filter(deleted = False).filter(id = note_id))
 
 def add_note(request):
-    return HttpResponse("add_note")
+    context = Context({
+        'tags': Tag.objects.all(),
+    })
+    header_1 = loader.get_template('math_notepad/header_1.html')
+    add_note_scripts = loader.get_template('math_notepad/add_note_scripts.html')
+    header_2 = loader.get_template('math_notepad/header_2.html')
+    add_note = loader.get_template('math_notepad/add_note.html')
+    footer = loader.get_template('math_notepad/footer.html')
+    return HttpResponse(header_1.render(Context()) +
+                        add_note_scripts.render(Context()) + 
+                        header_2.render(Context()) +
+                        add_note.render(context) + 
+                        footer.render(Context()))
+
+@csrf_exempt
+def add_note_request(request):
+    new_note_text = request.POST['text']
+    new_note = Note.objects.create(text = new_note_text, creation_date = datetime.datetime.now(), deleted = False)
+    return HttpResponse("blah!")
 
 def tags(request):
     context = Context({
