@@ -3,19 +3,52 @@
 from django.http import HttpResponse
 from math_notepad.models import Note, Tag
 from django.template import Context, loader
+from django.views.decorators.csrf import csrf_exempt
+from django.core import serializers
 
 def home(request):
-    return show_notes(Note.objects.all())
+    return show_notes(Note.objects.all().filter(deleted = False))
 
 def tag(request, tag_id):
-    return show_notes(Note.objects.filter(tags__id__exact = tag_id))
+    return show_notes(Note.objects.filter(deleted = False).filter(tags__id = tag_id))
 
 def note(request, note_id):
-    return show_notes(Note.objects.filter(id = note_id))
+    return show_notes(Note.objects.filter(deleted = False).filter(id = note_id))
+
+def add_note(request):
+    return HttpResponse("add_note")
+
+def tags(request):
+    context = Context({
+        'tags': Tag.objects.all(),
+    })
+    header_1 = loader.get_template('math_notepad/header_1.html')
+    tags_scripts = loader.get_template('math_notepad/tags_scripts.html')
+    header_2 = loader.get_template('math_notepad/header_2.html')
+    tags = loader.get_template('math_notepad/tags.html')
+    footer = loader.get_template('math_notepad/footer.html')
+    return HttpResponse(header_1.render(Context()) +
+                        tags_scripts.render(Context()) + 
+                        header_2.render(Context()) +
+                        tags.render(context) +
+                        footer.render(Context()))
+
+@csrf_exempt
+def new_tag(request):
+    new_tag_name = request.POST['name']
+    new_tag = Tag.objects.create(name = new_tag_name)
+    json_serializer = serializers.get_serializer('json')()
+    return HttpResponse(json_serializer.serialize(Tag.objects.all(), ensure_ascii = False))
 
 def show_notes(notes):
-    template = loader.get_template('math_notepad/index.html')
     context = Context({
         'notes': notes,
     })
-    return HttpResponse(template.render(context))
+    header_1 = loader.get_template('math_notepad/header_1.html')
+    header_2 = loader.get_template('math_notepad/header_2.html')
+    notes = loader.get_template('math_notepad/notes.html')
+    footer = loader.get_template('math_notepad/footer.html')
+    return HttpResponse(header_1.render(Context()) +
+                        header_2.render(Context()) +
+                        notes.render(context) +
+                        footer.render(Context()))

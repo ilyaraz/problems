@@ -16,5 +16,8 @@ urlpatterns = patterns('',
     url(r'^$', 'math_notepad.views.home'),
     url(r'^tag/(?P<tag_id>\d+)/$', 'math_notepad.views.tag'),
     url(r'^note/(?P<note_id>\d+)/$', 'math_notepad.views.note'),
+    url(r'^add_note/$', 'math_notepad.views.add_note'),
+    url(r'^tags/$', 'math_notepad.views.tags'),
+    url(r'^new_tag/$', 'math_notepad.views.new_tag'),
     url(r'^admin/', include(admin.site.urls)),
 )
