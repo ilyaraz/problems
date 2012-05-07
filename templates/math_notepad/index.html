@@ -14,26 +14,35 @@
             });
         </script>
         <style type="text/css">
+            body {
+                background-color: #ddd;
+            }
+            a {
+                font-weight: bold;
+                text-decoration: underline;
+                color: #333;
+            }
             .note {
                 margin: 10px;
-                width: 500px;
+                width: 960px;
                 background-color: #fff;
                 padding: 5px;
             }
             .header {
-                width: 496px;
+                width: 956px;
                 margin: 10px;
                 background-color: #fff;
                 padding: 5px;
                 border: 2px solid;
             }
-            body {
-                background-color: #ddd;
+            .everything {
+                margin: 0 auto;
+                width: 960px;
             }
         </style>
     </head>
     <body>
-        <div>
+        <div class="everything">
             <div class="header"><a href="/">all notes</a></div>
             <div>
                 {% for note in notes %}
