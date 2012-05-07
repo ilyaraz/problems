@@ -13,20 +13,40 @@
                 }
             });
         </script>
+        <style type="text/css">
+            .note {
+                margin: 10px;
+                width: 500px;
+                background-color: #fff;
+                padding: 5px;
+            }
+            .header {
+                width: 496px;
+                margin: 10px;
+                background-color: #fff;
+                padding: 5px;
+                border: 2px solid;
+            }
+            body {
+                background-color: #ddd;
+            }
+        </style>
     </head>
     <body>
-        <div><a href="/">all notes</a></div>
         <div>
-            {% for note in notes %}
+            <div class="header"><a href="/">all notes</a></div>
             <div>
-                <div>{{ note.text }} <a href = "/note/{{note.id}}">#</a></div>
-                <div>
-                    {% for tag in note.tags.all %}
-                    <a href = "/tag/{{tag.id}}">{{tag.name}}</a>
-                    {% endfor %}
+                {% for note in notes %}
+                <div class="note">
+                    <div class="note_text">{{ note.text }} <a href = "/note/{{note.id}}">#</a></div>
+                    <div class="tags">
+                        {% for tag in note.tags.all %}
+                        <a href = "/tag/{{tag.id}}">{{tag.name}}</a>
+                        {% endfor %}
+                    </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </body>
 </html>
