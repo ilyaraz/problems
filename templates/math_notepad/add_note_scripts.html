@@ -2,7 +2,13 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $("#add_note_button").click(function() {
-            $.post("/add_note_request/", {"text": $("#new_note_text").val()}, function(data) {
+            tags = [];
+            $(".tag_checkbox").each(function() {
+                if ($(this).attr('checked')) {
+                    tags.push($(this).attr('id'));
+                }
+            });
+            $.post("/add_note_request/", {"text": $("#new_note_text").val(), "tags": tags}, function(data) {
                 window.location = "/";
             });
         });

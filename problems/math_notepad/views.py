@@ -34,7 +34,12 @@ def add_note(request):
 @csrf_exempt
 def add_note_request(request):
     new_note_text = request.POST['text']
-    new_note = Note.objects.create(text = new_note_text, creation_date = datetime.datetime.now(), deleted = False)
+    tags = [int(x) for x in request.POST.getlist('tags[]')]
+    new_note = Note(text = new_note_text, creation_date = datetime.datetime.now(), deleted = False)
+    new_note.save()
+    for tag in tags:
+        new_note.tags.add(Tag.objects.get(pk = tag))
+    new_note.save()
     return HttpResponse("blah!")
 
 def tags(request):
